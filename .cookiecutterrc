@@ -1,0 +1,47 @@
+# This file exists so you can easily regenerate your project.
+#
+# `cookiepatcher` is a convenient shim around `cookiecutter`
+# for regenerating projects (it will generate a .cookiecutterrc 
+# automatically for any template). To use it:
+#
+#    pip install cookiepatcher
+#    cookiepatcher gh:ionelmc/cookiecutter-pylibrary project-path
+#
+# See:
+#    https://pypi.python.org/pypi/cookiecutter
+#
+# Alternatively, you can run:
+#
+#    cookiecutter --overwrite-if-exists --config-file=project-path/.cookiecutterrc gh:ionelmc/cookiecutter-pylibrary
+
+default_context:
+
+    appveyor:                  'no'
+    bin_name:                  'pre-push-hook'
+    c_extension_cython:        'no'
+    c_extension_optional:      'no'
+    c_extension_support:       'no'
+    codacy:                    'no'
+    codeclimate:               'no'
+    codecov:                   'yes'
+    command_line_interface:    'no'
+    coveralls:                 'no'
+    distribution_name:         'pre-push-hook'
+    email:                     'kamil@kujawinski.net'
+    full_name:                 'Kamil Kujawinski'
+    github_username:           'kkujawinski'
+    landscape:                 'no'
+    package_name:              'pre_push_hook'
+    project_name:              'git pre push hook'
+    project_short_description: 'Pre push hook running linters.'
+    release_date:              'today'
+    repo_name:                 'git-pre-push-hook'
+    requiresio:                'no'
+    scrutinizer:               'no'
+    sphinx_theme:              'readthedocs'
+    test_matrix_configurator:  'no'
+    test_runner:               'pytest'
+    travis:                    'yes'
+    version:                   '0.1.0'
+    website:                   'http://kjw.pt'
+    year:                      '2016'
