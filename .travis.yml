@@ -3,41 +3,48 @@ python: '3.5'
 sudo: false
 env:
   global:
-    - LD_PRELOAD=/lib/x86_64-linux-gnu/libSegFault.so
-    - SEGFAULT_SIGNALS=all
+  - LD_PRELOAD=/lib/x86_64-linux-gnu/libSegFault.so
+  - SEGFAULT_SIGNALS=all
   matrix:
-    - TOXENV=check
-    - TOXENV=py27-cover,codecov
-    - TOXENV=py27-nocov
-    - TOXENV=py33-cover,codecov
-    - TOXENV=py33-nocov
-    - TOXENV=py34-cover,codecov
-    - TOXENV=py34-nocov
-    - TOXENV=py35-cover,codecov
-    - TOXENV=py35-nocov
-    - TOXENV=pypy-cover,codecov
-    - TOXENV=pypy-nocov
+  - TOXENV=check
+  - TOXENV=py27-cover,codecov
+  - TOXENV=py27-nocov
+  - TOXENV=py33-cover,codecov
+  - TOXENV=py33-nocov
+  - TOXENV=py34-cover,codecov
+  - TOXENV=py34-nocov
+  - TOXENV=py35-cover,codecov
+  - TOXENV=py35-nocov
+  - TOXENV=pypy-cover,codecov
+  - TOXENV=pypy-nocov
 before_install:
-  - python --version
-  - uname -a
-  - lsb_release -a
+- python --version
+- uname -a
+- lsb_release -a
 install:
-  - pip install tox
-  - virtualenv --version
-  - easy_install --version
-  - pip --version
-  - tox --version
+- pip install tox
+- virtualenv --version
+- easy_install --version
+- pip --version
+- tox --version
 script:
-  - tox -v
+- tox -v
 after_failure:
-  - more .tox/log/* | cat
-  - more .tox/*/log/* | cat
+- more .tox/log/* | cat
+- more .tox/*/log/* | cat
 before_cache:
-  - rm -rf $HOME/.cache/pip/log
+- rm -rf $HOME/.cache/pip/log
 cache:
   directories:
-    - $HOME/.cache/pip
+  - "$HOME/.cache/pip"
 notifications:
   email:
     on_success: never
     on_failure: always
+deploy:
+  provider: pypi
+  user: kkuj
+  on:
+    tags: true
+  password:
+    secure: kmIvREpulRhl2LLs5a2jS/ee4zhvKIr7HMlKL30ZT25Hcz2POPMZ/bfXiD4WwWy/jxayDu0pzvHenuBfp2oq8KXbgzuHhJn815CVo/K6jE/IurrT46JLMRrjiEllPfbXkH94037xJUwH5xHpedKynhTedfnso2D+yqE0WxfetH/Ww68B6FFFzynhJ9FQvOuhFnql9ow9+NvP4l5t8PyCtK97fhXDQMZU5pKdmJwCqjRATJdcVAs8BaFzw7OJx+k8fVGSXGzAkaDfEYlhMLrBeJvZm8KRr6Q07T1ZDsIDujKGJk3RxpCebwWUmkI93MxvGme1IqKUMNHsqC8u5qTIn7l1lRxl/+Grdjsp43pbMMV/xrYX/jEjHxmkUx4eYe8B6u27i+V2VyeYGjlRJIhvQ19OpSFI+h9sHpi8X+Dpu8wy+h0aJ9A5AE/Ehu9ovYYTWo8JoMt8b9vAZkYjNldKR2T6YokLo0UeAWcaAcAZ8p1fSP8Zj+P9BA3b7ZG8AvJGwM3gP7F7YFiZ/O/RnsUWqoJnfhOOpKFO+W6DPuEF//vSaMIsUwthnZNC6D9QTG6V5hVPT2E3YjEdAwxHc41to5BSiCSjczMqQ+okt2EDaVmCtTUId1wOxyTEgIPyULMKGMzGXThmVEkSq+lynbtkWqDucJohHf/6+d2J9W7DngU=
