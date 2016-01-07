@@ -54,11 +54,6 @@ class Push(object):
 
         current_ref = self.git_wrapper.get_current_ref()
         self.current_branch = current_ref.split('/')[-1]
-        self.removing_remote = set()
-
-        for commit in changes:
-            if commit.local_ref == "(delete)":
-                self.removing_remote.add(commit.remote_branch)
 
 
 class BranchChanges(object):

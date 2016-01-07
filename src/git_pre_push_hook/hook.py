@@ -62,6 +62,8 @@ def parse_push(args, lines, git_wrapper=None):
             local_ref, local_sha1, remote_ref, remote_sha1 = line.split()
         except ValueError:
             raise HookParserException("Could not parse commit from '{}'\n".format(line))
+        if local_ref == '(delete)':
+            continue
         changes.append(BranchChanges(local_ref, local_sha1, remote_ref, remote_sha1, git_wrapper=git_wrapper))
     return Push(changes=changes, remote_name=remote_name, remote_url=remote_url, git_wrapper=git_wrapper)
 
@@ -79,8 +81,6 @@ def main(args=None, input_lines=None, stdout=None, git_wrapper=None, skip_prompt
     any_warning = False
 
     for commit in push.changes:
-        if commit.local_ref == '(delete)':
-            continue
         try:
             commit_warnings = commit.get_user_warnings()
         except HookParserException as e:
