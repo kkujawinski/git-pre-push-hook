@@ -17,7 +17,7 @@
 default_context:
 
     appveyor:                  'no'
-    bin_name:                  'pre-push-hook'
+    bin_name:                  'git-pre-push-hook'
     c_extension_cython:        'no'
     c_extension_optional:      'no'
     c_extension_support:       'no'
@@ -26,7 +26,7 @@ default_context:
     codecov:                   'yes'
     command_line_interface:    'no'
     coveralls:                 'no'
-    distribution_name:         'pre-push-hook'
+    distribution_name:         'git-pre-push-hook'
     email:                     'kamil@kujawinski.net'
     full_name:                 'Kamil Kujawinski'
     github_username:           'kkujawinski'

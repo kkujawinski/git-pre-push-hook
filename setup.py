@@ -22,7 +22,7 @@ def read(*names, **kwargs):
 
 
 setup(
-    name='pre-push-hook',
+    name='git-pre-push-hook',
     version='0.1.0',
     license='BSD',
     description='Pre push hook running linters.',
@@ -60,8 +60,14 @@ setup(
         # eg: 'keyword1', 'keyword2', 'keyword3',
     ],
     install_requires=[
+        'flake8'
         # eg: 'aspectlib==1.1.1', 'six>=1.7',
     ],
+    entry_points={
+        'console_scripts': [
+            'install-git-pre-push-hook = git_pre_push_hook.install:main',
+        ],
+    },
     extras_require={
         # eg:
         #   'rst': ['docutils>=0.11'],

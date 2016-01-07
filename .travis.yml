@@ -7,7 +7,6 @@ env:
     - SEGFAULT_SIGNALS=all
   matrix:
     - TOXENV=check
-
     - TOXENV=py27-cover,codecov
     - TOXENV=py27-nocov
     - TOXENV=py33-cover,codecov

@@ -7,18 +7,12 @@ Overview
 .. list-table::
     :stub-columns: 1
 
-    * - docs
-      - |docs|
     * - tests
       - | |travis|
         | |codecov|
         |
     * - package
       - |version| |downloads| |wheel| |supported-versions| |supported-implementations|
-
-.. |docs| image:: https://readthedocs.org/projects/git-pre-push-hook/badge/?style=flat
-    :target: https://readthedocs.org/projects/git-pre-push-hook
-    :alt: Documentation Status
 
 .. |travis| image:: https://travis-ci.org/kkujawinski/git-pre-push-hook.svg?branch=master
     :alt: Travis-CI Build Status
@@ -28,25 +22,25 @@ Overview
     :alt: Coverage Status
     :target: https://codecov.io/github/kkujawinski/git-pre-push-hook
 
-.. |version| image:: https://img.shields.io/pypi/v/pre-push-hook.svg?style=flat
+.. |version| image:: https://img.shields.io/pypi/v/git-pre-push-hook.svg?style=flat
     :alt: PyPI Package latest release
-    :target: https://pypi.python.org/pypi/pre-push-hook
+    :target: https://pypi.python.org/pypi/git-pre-push-hook
 
-.. |downloads| image:: https://img.shields.io/pypi/dm/pre-push-hook.svg?style=flat
+.. |downloads| image:: https://img.shields.io/pypi/dm/git-pre-push-hook.svg?style=flat
     :alt: PyPI Package monthly downloads
-    :target: https://pypi.python.org/pypi/pre-push-hook
+    :target: https://pypi.python.org/pypi/git-pre-push-hook
 
-.. |wheel| image:: https://img.shields.io/pypi/wheel/pre-push-hook.svg?style=flat
+.. |wheel| image:: https://img.shields.io/pypi/wheel/git-pre-push-hook.svg?style=flat
     :alt: PyPI Wheel
-    :target: https://pypi.python.org/pypi/pre-push-hook
+    :target: https://pypi.python.org/pypi/git-pre-push-hook
 
-.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/pre-push-hook.svg?style=flat
+.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/git-pre-push-hook.svg?style=flat
     :alt: Supported versions
-    :target: https://pypi.python.org/pypi/pre-push-hook
+    :target: https://pypi.python.org/pypi/git-pre-push-hook
 
-.. |supported-implementations| image:: https://img.shields.io/pypi/implementation/pre-push-hook.svg?style=flat
+.. |supported-implementations| image:: https://img.shields.io/pypi/implementation/git-pre-push-hook.svg?style=flat
     :alt: Supported implementations
-    :target: https://pypi.python.org/pypi/pre-push-hook
+    :target: https://pypi.python.org/pypi/git-pre-push-hook
 
 
 .. end-badges
@@ -60,12 +54,36 @@ Installation
 
 ::
 
-    pip install pre-push-hook
+    pip install git-pre-push-hook
 
-Documentation
+Install hook to current Git-repository:
+
+::
+
+    install-git-pre-push-hook
+
+Default pre-push hook:
+
+::
+
+    python -c "import pre_push_hook; sys.exit(pre_push_hook.hook.main())"
+
+Configuration
 =============
 
-https://git-pre-push-hook.readthedocs.org/
+You can pass configuration parameters to script by setting proper environement variables in ./.git/hooks/pre-push
+
+1. Custom Pyflakes configuration file
+
+::
+
+    LINTER_FLAKE_CONFIG="./setup.cfg" python ...
+
+2. Warnings only for changed lines 
+
+::
+
+    CHANGED_LINES_ONLY=1 python ...
 
 Development
 ===========

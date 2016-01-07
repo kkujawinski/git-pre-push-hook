@@ -48,7 +48,7 @@ To set up `git-pre-push-hook` for local development:
 
    Now you can make your changes locally.
 
-4. When you're done making changes, run all the checks, doc builder and spell checker with `tox <http://tox.readthedocs.org/en/latest/install.html>`_ one command::
+4. When you're done making changes, run all the checks with `tox <http://tox.readthedocs.org/en/latest/install.html>`_ one command::
 
     tox
 
