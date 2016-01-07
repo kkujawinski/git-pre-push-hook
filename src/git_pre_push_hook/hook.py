@@ -79,6 +79,8 @@ def main(args=None, input_lines=None, stdout=None, git_wrapper=None, skip_prompt
     any_warning = False
 
     for commit in push.changes:
+        if commit.local_ref == '(delete)':
+            continue
         try:
             commit_warnings = commit.get_user_warnings()
         except HookParserException as e:
