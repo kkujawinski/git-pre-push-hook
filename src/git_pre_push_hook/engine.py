@@ -80,8 +80,8 @@ class BranchChanges(object):
         # - diffs are sorted based on line numbers
         output = {}
 
-        FILE_NAME_RE = r'\+\+\+ \b(.+)\b'
-        CHANGED_LINES_RE = r'@@ -[0-9,]+ \+([0-9]+)(?:,([0-9]+))? @@'
+        FILE_NAME_RE = r'^\+\+\+ (.+)$'
+        CHANGED_LINES_RE = r'^@@ -[0-9,]+ \+([0-9]+)(?:,([0-9]+))? @@'
         current_file_name = None
 
         for line in self.git_wrapper.get_min_diff(self.remote_sha1, self.local_sha1).split('\n'):
@@ -94,6 +94,8 @@ class BranchChanges(object):
             line_number_match = re.match(CHANGED_LINES_RE, line)
             if line_number_match:
                 assert current_file_name
+                if current_file_name == '/dev/null':
+                    continue
                 line_start, diff_len = line_number_match.groups()
                 line_start, diff_len = int(line_start), int(diff_len or 0)
                 output[current_file_name].append(LinesRange(line_start, line_start + diff_len))
