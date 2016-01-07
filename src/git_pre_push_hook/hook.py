@@ -109,8 +109,8 @@ def main(args=None, input_lines=None, stdout=None, git_wrapper=None, skip_prompt
             sys.stdin = open('/dev/tty')
             ignore_warnings = query_yes_no('Do you want ignore linting warnings?', default='no')
         except (IOError, EOFError):
-            stdout.write('Interactive mode not available.\n')
-            stdout.write('You can ignore linter warnings by running `git push` from command line.\n')
+            stdout.write('\nInteractive mode not available.\n')
+            stdout.write('You can ignore linter warnings by running `git push` in command line.\n')
             return 1
         else:
             if ignore_warnings:
