@@ -71,7 +71,7 @@ Default pre-push hook:
 Configuration
 =============
 
-You can pass configuration parameters to script by setting proper environement variables in ./.git/hooks/pre-push
+You can pass configuration parameters to script by setting proper environement variables in ``./.git/hooks/pre-push``
 
 1. Custom Pyflakes configuration file
 
@@ -84,6 +84,16 @@ You can pass configuration parameters to script by setting proper environement v
 ::
 
     CHANGED_LINES_ONLY=1 python ...
+
+Troubleshooting
+===============
+
+1. In OSX not prompt question is displayed and after pressing any key EOFError is raised:
+
+Maybe you are not using system Python. E.g. MacPorts have problem with using stdin (
+see: http://superuser.com/questions/965133/python2-7-from-macports-stdin-issue).
+Try using system Python (``System/Library/Frameworks/Python.framework/Versions/Current/bin/python``)
+
 
 Development
 ===========
