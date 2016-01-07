@@ -23,7 +23,7 @@ def read(*names, **kwargs):
 
 setup(
     name='git-pre-push-hook',
-    version='0.1.3',
+    version='0.2.0',
     license='BSD',
     description='Pre push hook running linters.',
     long_description='%s\n%s' % (
