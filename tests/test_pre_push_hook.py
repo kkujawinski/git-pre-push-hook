@@ -56,6 +56,7 @@ test_file.py:4:1: E302 expected 2 blank lines, found 1
 test_file.py:5:17: W291 trailing whitespace
 test_file.py:7:1: E302 expected 2 blank lines, found 1
 
+
 Interactive mode not available.
 You can ignore linter warnings by running `git push` from command line.
 '''
@@ -83,6 +84,7 @@ test_file.py:1:10: E203 whitespace before ','
 test_file.py:2:13: E225 missing whitespace around operator
 test_file.py:4:1: E302 expected 2 blank lines, found 1
 test_file.py:7:1: E302 expected 2 blank lines, found 1
+
 
 Interactive mode not available.
 You can ignore linter warnings by running `git push` from command line.
