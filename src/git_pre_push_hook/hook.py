@@ -64,7 +64,12 @@ def parse_push(args, lines, git_wrapper=None):
             raise HookParserException("Could not parse commit from '{}'\n".format(line))
         if local_ref == '(delete)':
             continue
-        changes.append(BranchChanges(local_ref, local_sha1, remote_ref, remote_sha1, git_wrapper=git_wrapper))
+        changes.append(
+            BranchChanges(
+                local_ref, local_sha1, remote_ref, remote_sha1,
+                remote_name=remote_name, git_wrapper=git_wrapper
+            )
+        )
     return Push(changes=changes, remote_name=remote_name, remote_url=remote_url, git_wrapper=git_wrapper)
 
 

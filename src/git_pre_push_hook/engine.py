@@ -22,6 +22,7 @@ class HookParserException(Exception):
 Push = namedtuple('Push', ['changes', 'remote_name', 'remote_url',
                            'current_branch', 'removing_remote'])
 LinesRange = namedtuple('LinesRange', ['start', 'end'])
+EMPTY_REF = 40 * '0'
 
 
 class GitWrapper(object):
@@ -38,6 +39,15 @@ class GitWrapper(object):
 
     def get_current_ref(self):
         return subprocess.check_output(['git', 'symbolic-ref', 'HEAD']).rstrip()
+
+    def get_remote_refs(self, remote_name=''):
+        remotes_prefix = 'refs/remotes/' + remote_name
+        refs_command = ['git', 'for-each-ref', '--format', '%(refname)', remotes_prefix]
+        return subprocess.check_output(refs_command).rstrip().split('\n')
+
+    def get_revs(self, ref):
+        return subprocess.check_output(['git', 'rev-list', ref]).rstrip().split()
+
 
 default_git_wrapper = GitWrapper()
 
@@ -57,16 +67,26 @@ class Push(object):
 
 
 class BranchChanges(object):
-    def __init__(self, local_ref, local_sha1, remote_ref, remote_sha1, git_wrapper=None):
+    def __init__(self, local_ref, local_sha1, remote_ref, remote_sha1, remote_name, git_wrapper=None):
         if git_wrapper is None:
             git_wrapper = default_git_wrapper
         self.git_wrapper = git_wrapper
         self.local_ref = local_ref
         self.local_sha1 = local_sha1
-        self.remote_ref = remote_ref
-        self.remote_sha1 = remote_sha1
-        self.local_branch = local_ref.split('/')[-1] if '/' in local_ref else None
-        self.remote_branch = remote_ref.split('/')[-1] if '/' in remote_ref else None
+
+        if remote_sha1 == EMPTY_REF:
+            self.remote_sha1 = self.get_remote_fork_point(remote_name)
+        else:
+            self.remote_ref = remote_ref
+            self.remote_sha1 = remote_sha1
+
+    def get_remote_fork_point(self, remote_name):
+        remote_branches = self.git_wrapper.get_remote_refs(remote_name)
+        all_remote_revs = set.union(*[set(self.git_wrapper.get_revs(ref)) for ref in remote_branches])
+
+        for rev in self.git_wrapper.get_revs(self.local_ref):
+            if rev in all_remote_revs:
+                return rev
 
     def get_user_modified_lines(self):
         """
@@ -132,9 +152,7 @@ class BranchChanges(object):
             warnings = []
             tmpdir = tempfile.mkdtemp()
 
-            prepared_files = self.prepare_files(target_dir=tmpdir)
-
-            for file_path in prepared_files:
+            for file_path in self.prepare_files(target_dir=tmpdir):
                 extension = file_path.split('.')[-1]
                 linter = LINTERS[extension]
                 warnings.extend(linter(file_path, target_dir=tmpdir))

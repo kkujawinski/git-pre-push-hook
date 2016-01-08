@@ -4,12 +4,15 @@ except ImportError:
     from io import StringIO
 import os
 
+from git_pre_push_hook.engine import EMPTY_REF
 from git_pre_push_hook.hook import main as hook_main
 from py._path.local import LocalPath
 
 
 class MockGitWrapper(object):
     def get_min_diff(self, ref1, ref2):
+        assert ref1 != EMPTY_REF
+        assert ref2 != EMPTY_REF
         diff_result = '''
 diff --git test_file.py test_file.py
 index 62f3f3d..c15c4bc 100644
@@ -26,6 +29,8 @@ index 62f3f3d..c15c4bc 100644
         return diff_result.strip()
 
     def get_diff_names(self, ref1, ref2):
+        assert ref1 != EMPTY_REF
+        assert ref2 != EMPTY_REF
         return 'test_file.py'
 
     def show_content(self, file_path, ref):
