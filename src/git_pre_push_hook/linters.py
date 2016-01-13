@@ -28,6 +28,8 @@ def pyflakes(file_path, target_dir=None):
         flake8_style.check_files([file_path])
 
         for line in buffer.getvalue().strip().split('\n'):
+            if not line:
+                continue
             file_path, line_num, column_num, message = line.split(':', 3)
             line_num, column_num = int(line_num), int(column_num)
             message = message.strip()
