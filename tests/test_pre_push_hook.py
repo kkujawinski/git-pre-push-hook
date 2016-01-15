@@ -33,8 +33,8 @@ index 62f3f3d..c15c4bc 100644
         assert ref2 != EMPTY_REF
         return 'test_file.py'
 
-    def show_content(self, file_path, ref):
-        return (LocalPath('tests/mock_repo/') / file_path).read()
+    def save_content_to_file(self, file_path, ref, file_hander):
+        file_hander.write((LocalPath('tests/mock_repo/') / file_path).read())
 
     def get_current_ref(self):
         return 'refs/heads/master'

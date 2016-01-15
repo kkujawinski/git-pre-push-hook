@@ -34,8 +34,8 @@ class GitWrapper(object):
         diff_command = ['git', 'diff', '--name-only', ref1 + '..' + ref2]
         return subprocess.check_output(diff_command).rstrip()
 
-    def show_content(self, file_path, ref):
-        return subprocess.check_output(['git', 'show', ref + ':' + file_path])
+    def save_content_to_file(self, file_path, ref, file_hander):
+        subprocess.check_call(['git', 'show', self.local_ref + ':' + file_path], stdout=file_hander)
 
     def get_current_ref(self):
         return subprocess.check_output(['git', 'symbolic-ref', 'HEAD']).rstrip()
@@ -142,9 +142,9 @@ class BranchChanges(object):
             if not os.path.isdir(new_dirname):
                 os.makedirs(new_dirname)
 
-            file_content = self.git_wrapper.show_content(file_path, self.local_ref)
             with open(new_file_path, "wb") as fh:
-                fh.write(file_content.encode())
+                self.git_wrapper.save_content_to_file(file_path, self.local_ref, fh)
+                subprocess.check_call(['git', 'show', self.local_ref + ':' + file_path], stdout=fh)
             yield new_file_path
 
     def get_linter_warnings(self):
