@@ -144,7 +144,6 @@ class BranchChanges(object):
 
             with open(new_file_path, "wb") as fh:
                 self.git_wrapper.save_content_to_file(file_path, self.local_ref, fh)
-                subprocess.check_call(['git', 'show', self.local_ref + ':' + file_path], stdout=fh)
             yield new_file_path
 
     def get_linter_warnings(self):
