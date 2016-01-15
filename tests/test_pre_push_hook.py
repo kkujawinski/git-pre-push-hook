@@ -34,7 +34,7 @@ index 62f3f3d..c15c4bc 100644
         return 'test_file.py'
 
     def save_content_to_file(self, file_path, ref, file_hander):
-        file_hander.write((LocalPath('tests/mock_repo/') / file_path).read())
+        file_hander.write((LocalPath('tests/mock_repo/') / file_path).read().encode())
 
     def get_current_ref(self):
         return 'refs/heads/master'
