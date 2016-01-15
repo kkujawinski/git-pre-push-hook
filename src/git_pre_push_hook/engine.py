@@ -35,7 +35,7 @@ class GitWrapper(object):
         return subprocess.check_output(diff_command).rstrip()
 
     def save_content_to_file(self, file_path, ref, file_hander):
-        subprocess.check_call(['git', 'show', self.local_ref + ':' + file_path], stdout=file_hander)
+        subprocess.check_call(['git', 'show', ref + ':' + file_path], stdout=file_hander)
 
     def get_current_ref(self):
         return subprocess.check_output(['git', 'symbolic-ref', 'HEAD']).rstrip()
