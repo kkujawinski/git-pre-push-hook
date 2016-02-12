@@ -31,8 +31,18 @@ class GitWrapper(object):
         return subprocess.check_output(diff_command).rstrip()
 
     def get_diff_names(self, ref1, ref2):
-        diff_command = ['git', 'diff', '--name-only', ref1 + '..' + ref2]
-        return subprocess.check_output(diff_command).rstrip()
+        diff_command = ['git', 'diff', '--name-status', ref1 + '..' + ref2]
+        output_with_status = subprocess.check_output(diff_command).rstrip()
+
+        # removing deleted files from list
+        output = []
+        for line in output_with_status.split('\n'):
+            status, file_name = line.split('\t', 1)
+            if status == 'D':
+                continue
+            output.append(file_name)
+
+        return '\n'.join(output)
 
     def save_content_to_file(self, file_path, ref, file_hander):
         subprocess.check_call(['git', 'show', ref + ':' + file_path], stdout=file_hander)
