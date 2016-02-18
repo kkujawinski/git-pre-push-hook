@@ -37,6 +37,8 @@ class GitWrapper(object):
         # removing deleted files from list
         output = []
         for line in output_with_status.split('\n'):
+            if not line:
+                continue
             status, file_name = line.split('\t', 1)
             if status == 'D':
                 continue
